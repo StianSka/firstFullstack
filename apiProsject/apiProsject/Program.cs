@@ -1,3 +1,7 @@
+using apiProsject.Character;
+using System.ComponentModel;
+using System.Xml.Linq;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +19,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 
-var inMemoryDb = new List<string>
+var inMemoryDb = new List<Enemy>
 {
-    "lunsj","11.30-12.15",
-    "jobbe med prosjekt","12.15-14.30"
+  new Goblin("Mork", 100, 100, 20, 3, 40)
 };
+
 
 app.MapGet("/index", () =>
 {
