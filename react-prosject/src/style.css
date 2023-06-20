@@ -1,0 +1,31 @@
+.card{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+    height: 300px;
+    width: 200px;
+    padding:5px;
+    border-style: solid;
+    border-radius: 4%;
+}
+.card-picture{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    border-style: solid;
+    border-radius: 4%;
+}
+.card-deets{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    height: 60px;
+}
+.card-moves{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 110px;
+    border-style: solid;
+    border-radius: 4%;
+}

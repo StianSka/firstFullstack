@@ -1,9 +1,12 @@
+import Card from "./components/Card.jsx";
 import "./style.css";
 
 export default function App() {
-  getData();
-
-  return <div></div>;
+  return (
+    <div>
+      <Card></Card>
+    </div>
+  );
 }
 
 async function getData() {
