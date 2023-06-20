@@ -14,6 +14,10 @@
     padding:5px;
     border-style: solid;
     border-radius: 4%;
+    border-width: 6px;
+    border-color: black;
+    background-color:maroon;
+    color: azure;
 }
 .card-picture{
     display: grid;
@@ -35,4 +39,5 @@
     height: 110px;
     border-style: solid;
     border-radius: 4%;
+    background-color: maroon;
 }

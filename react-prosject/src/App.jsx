@@ -1,6 +1,4 @@
-import { useState } from "react";
-import Card from "./components/Card.jsx";
-import getCardData from "./requests/Requests.jsx";
+import Card from "./components/Card";
 import "./style.css";
 
 export default function App() {

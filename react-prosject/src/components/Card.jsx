@@ -1,21 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Card() {
   const [cardName, setCardName] = useState();
   const [maxHp, setMaxHp] = useState();
   const [currentHp, setCurrentHp] = useState();
   const [reasourses, setReasourses] = useState();
-  async function getData() {
-    const response = await axios.get("https://localhost:7211/index");
-    const stuff = response.data;
-    console.log(stuff);
-    setCardName(stuff[0].name);
-    setMaxHp(stuff[0].maxHp);
-    setCurrentHp(stuff[0].currentHp);
-    setReasourses(stuff[0].potionCount);
-  }
 
-  getData();
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get("https://localhost:7211/object");
+        setCardName(response.data.name);
+        setMaxHp(response.data.maxHp);
+        setCurrentHp(response.data.currentHp);
+        setReasourses(response.data.potionCount);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getData();
+  }, []);
+
+  if (cardName === null) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="card">
       <div className="card-picture">picture?</div>
