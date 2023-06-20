@@ -21,9 +21,16 @@ var app = builder.Build();
 
 var inMemoryDb = new List<Enemy>
 {
-  new Goblin("Mork", 100, 100, 20, 3, 40)
+    Goblin.MakeRandomGoblin(),
+    Goblin.MakeRandomGoblin(),
+    Goblin.MakeRandomGoblin()
 };
 
+app.MapGet("/object", () =>
+{
+
+    return Goblin.MakeRandomGoblin();
+});
 
 app.MapGet("/index", () =>
 {
