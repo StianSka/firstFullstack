@@ -5,6 +5,7 @@ export default function Card() {
   const [maxHp, setMaxHp] = useState();
   const [currentHp, setCurrentHp] = useState();
   const [reasourses, setReasourses] = useState();
+  const [id, setId] = useState();
 
   useEffect(() => {
     const getData = async () => {
@@ -14,6 +15,7 @@ export default function Card() {
         setMaxHp(response.data.maxHp);
         setCurrentHp(response.data.currentHp);
         setReasourses(response.data.potionCount);
+        setId(response.data.id);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -22,9 +24,6 @@ export default function Card() {
     getData();
   }, []);
 
-  if (cardName === null) {
-    return <div>Loading...</div>;
-  }
   return (
     <div className="card">
       <div className="card-picture">picture?</div>
