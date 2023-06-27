@@ -20,27 +20,30 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 
-var inMemoryDb = new List<Enemy>
-{
-    Goblin.MakeRandomGoblin(),
-    Goblin.MakeRandomGoblin(),
-    Goblin.MakeRandomGoblin()
-};
+var inMemoryDb = new List<Enemy>{ }; 
+var inMemoryDb2 = new List<Hero> { };
 
-app.MapGet("/object", () =>
-{
 
-    return Goblin.MakeRandomGoblin();
-});
-
-app.MapGet("/index", () =>
+app.MapGet("/enemys", () =>
 {
+    while (inMemoryDb.Count < 7)
+    {
+        inMemoryDb.Add(Goblin.MakeRandomGoblin());
+    }
     return inMemoryDb;
+});
+app.MapGet("/hero", () =>
+{
+   while (inMemoryDb2.Count < 3)
+   {
+      inMemoryDb2.Add(Crusader.MakeRandomCrusader()); 
+   }
+   return inMemoryDb2;
 });
 
 app.MapPut("/doHealing/{id}", (Guid id) =>
 {
-    Enemy target = inMemoryDb.SingleOrDefault(e => e.Id == id);
+    Hero target = inMemoryDb2.SingleOrDefault(e => e.Id == id);
     bool result = target.DrinkPotion();
     return result;
 });

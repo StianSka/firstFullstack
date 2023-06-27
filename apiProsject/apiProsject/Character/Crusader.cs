@@ -1,9 +1,9 @@
 ﻿namespace apiProsject.Character
 {
-using apiProsject.utils;
-public class Goblin : Enemy
+    using apiProsject.utils;
+    public class Crusader : Hero
     {
-        public Goblin(Guid guid, string name, int maxHp, int hp, int strength, int potionCount, int speed)
+        public Crusader(Guid guid, string name, int maxHp, int hp, int strength, int potionCount, int speed)
         {
             Id = guid;
             Name = name;
@@ -13,18 +13,18 @@ public class Goblin : Enemy
             PotionCount = potionCount;
             Speed = speed;
         }
-        public static Goblin MakeRandomGoblin()
+        public static Crusader MakeRandomCrusader()
         {
             Guid id = Guid.NewGuid();
-            string[] names = { "Mork", "Gork", "Gazgull", "Grom", "Gorkett", };
+            string[] names = { "Karl", "Tristan ", "Baldwin ", "Percival ", "Gideon ", "Roland  " };
             int nameIndex = utils.RngNum(0, names.Length);
-            int maxHp = utils.RngNum(100,500);
+            int maxHp = utils.RngNum(100, 500);
             int currentHp = utils.RngNum(100, maxHp);
             int strength = utils.RngNum(10, 120);
             int potionCount = utils.RngNum(1, 8);
             int speed = utils.RngNum(10, 80);
 
-            Goblin result = new Goblin(id,names[nameIndex],maxHp, currentHp, strength, potionCount, speed);
+            Crusader result = new Crusader(id, names[nameIndex], maxHp, currentHp, strength, potionCount, speed);
             return result;
         }
     }
