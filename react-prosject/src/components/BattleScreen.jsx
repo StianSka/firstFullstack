@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import HeroStatScreen from "./HeroStatScreen";
 import EnemyScreen from "./EnemyScreen";
+import HeroScreen from "./HeroScreen";
 
 export default function BattleScreen() {
   const [heroes, setHeroes] = useState(null);
   const [enemys, setEnemys] = useState(null);
-  const [currentHeroTurn, setCurrentHeroTurn] = useState(0);
+  const [currentHeroTurnId, setCurrentHeroTurnId] = useState(null);
   const [hasUppdate, setHasUppdate] = useState(false);
 
   useEffect(() => {
@@ -13,6 +14,9 @@ export default function BattleScreen() {
       try {
         const response = await axios.get("https://localhost:7211/hero");
         setHeroes(response.data);
+        if (currentHeroTurnId === null) {
+          setCurrentHeroTurnId(response.data[0].id);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -35,7 +39,7 @@ export default function BattleScreen() {
   async function heal() {
     setHasUppdate(false);
     const response = await axios.put(
-      "https://localhost:7211/doHealing/" + heroes[currentHeroTurn].id
+      "https://localhost:7211/doHealing/" + currentHeroTurnId
     );
     (await response.data) === false
       ? alert("Cant do that!")
@@ -43,7 +47,8 @@ export default function BattleScreen() {
   }
 
   const heroCliked = (i) => {
-    setCurrentHeroTurn(i);
+    setCurrentHeroTurnId(i);
+    console.log(i);
   };
 
   return (
@@ -51,19 +56,15 @@ export default function BattleScreen() {
       {heroes == null ? (
         ""
       ) : (
-        <HeroStatScreen hero={heroes[currentHeroTurn]}></HeroStatScreen>
+        <HeroStatScreen
+          hero={heroes.find((obj) => obj.id === currentHeroTurnId)}
+        ></HeroStatScreen>
       )}
-      <div className="hero-screen">
-        <div className="character-portrait" onClick={() => heroCliked(0)}>
-          {heroes == null ? "" : heroes[0].name}
-        </div>
-        <div className="character-portrait" onClick={() => heroCliked(1)}>
-          {heroes == null ? "" : heroes[1].name}
-        </div>
-        <div className="character-portrait" onClick={() => heroCliked(2)}>
-          {heroes == null ? "" : heroes[2].name}
-        </div>
-      </div>
+      {heroes == null ? (
+        ""
+      ) : (
+        <HeroScreen heroes={heroes} heroCliked={heroCliked}></HeroScreen>
+      )}
       {heroes == enemys ? "" : <EnemyScreen enemys={enemys}></EnemyScreen>}
       <div className="move-menu">
         <button>basic attack</button>
