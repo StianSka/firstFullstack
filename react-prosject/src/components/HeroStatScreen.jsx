@@ -1,5 +1,4 @@
 export default function HeroStatScreen({ hero }) {
-  console.log(hero);
   return (
     <div className="hero-stats-screen">
       {hero == null ? (

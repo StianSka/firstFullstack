@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import HeroStatScreen from "./HeroStatScreen";
 import EnemyScreen from "./EnemyScreen";
 import HeroScreen from "./HeroScreen";
+import ButtonMenu from "./ButtonMenu";
 
 export default function BattleScreen() {
   const [heroes, setHeroes] = useState(null);
   const [enemys, setEnemys] = useState(null);
   const [currentHeroTurnId, setCurrentHeroTurnId] = useState(null);
   const [hasUppdate, setHasUppdate] = useState(false);
+  const [primedMove, setPrimedMove] = useState("basic");
 
   useEffect(() => {
     const getHeroes = async () => {
@@ -36,7 +38,20 @@ export default function BattleScreen() {
     getEnemys();
   }, [hasUppdate]);
 
-  async function heal() {
+  const doMove = async (enemyId) => {
+    setHasUppdate(false);
+    console.log(enemyId, primedMove, currentHeroTurnId);
+    const payload = {
+      primedMove: primedMove,
+      currentHeroTurnId: currentHeroTurnId,
+      enemyId: enemyId,
+    };
+    const response = await axios.put("https://localhost:7211/doMove/", payload);
+    await console.log(response.data);
+    setHasUppdate(response.data);
+  };
+
+  const usePotion = async () => {
     setHasUppdate(false);
     const response = await axios.put(
       "https://localhost:7211/doHealing/" + currentHeroTurnId
@@ -44,11 +59,14 @@ export default function BattleScreen() {
     (await response.data) === false
       ? alert("Cant do that!")
       : setHasUppdate(response.data);
-  }
+  };
 
-  const heroCliked = (i) => {
-    setCurrentHeroTurnId(i);
-    console.log(i);
+  const primeMove = (move) => {
+    setPrimedMove(move);
+  };
+
+  const heroCliked = (id) => {
+    setCurrentHeroTurnId(id);
   };
 
   return (
@@ -65,13 +83,12 @@ export default function BattleScreen() {
       ) : (
         <HeroScreen heroes={heroes} heroCliked={heroCliked}></HeroScreen>
       )}
-      {heroes == enemys ? "" : <EnemyScreen enemys={enemys}></EnemyScreen>}
-      <div className="move-menu">
-        <button>basic attack</button>
-        <button onClick={heal}>use potion</button>
-        <button>point spender</button>
-        <button>ultimate move</button>
-      </div>
+      {heroes == enemys ? (
+        ""
+      ) : (
+        <EnemyScreen enemys={enemys} doMove={doMove}></EnemyScreen>
+      )}
+      <ButtonMenu primeMove={primeMove} usePotion={usePotion}></ButtonMenu>
       <div className="description-box"></div>
     </div>
   );

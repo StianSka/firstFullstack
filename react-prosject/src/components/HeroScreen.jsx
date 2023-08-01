@@ -1,13 +1,26 @@
-export default function EnemyScreen({ heroes, heroCliked }) {
+import { useState } from "react";
+
+export default function HeroScreen({ heroes, heroCliked }) {
+  const [selectedHeroIndex, setSelectedHeroIndex] = useState(0);
+
+  const handleHeroClick = (heroId, index) => {
+    setSelectedHeroIndex(index);
+    heroCliked(heroId);
+  };
+
   return (
     <div className="hero-screen">
       {heroes == null
         ? ""
-        : heroes.map((item) => (
+        : heroes.map((item, index) => (
             <div
               key={item.id}
               className="character-portrait"
-              onClick={() => heroCliked(item.id)}
+              onClick={() => handleHeroClick(item.id, index)}
+              style={{
+                background:
+                  selectedHeroIndex === index ? "lightgray" : "transparent",
+              }}
             >
               <div>{item.name}</div>
               <div>

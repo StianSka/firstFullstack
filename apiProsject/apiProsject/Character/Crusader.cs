@@ -27,5 +27,22 @@
             Crusader result = new Crusader(id, names[nameIndex], maxHp, currentHp, strength, potionCount, speed);
             return result;
         }
+        public override bool basic(Enemy enemy)
+        {
+            bool result = false;
+            if (enemy.CurrentHp - this.Strength  < 0) { enemy.CurrentHp = 0; result = true; }
+            else { enemy.CurrentHp = enemy.CurrentHp - this.Strength; result = true; }
+            
+            return result;
+        }
+        public override bool spender(Enemy enemy)
+        {
+            return false;
+        }
+        public override bool ultimate(Enemy enemy)
+        {
+            return false;
+        }
+            
     }
 }

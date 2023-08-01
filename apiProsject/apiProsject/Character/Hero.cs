@@ -13,8 +13,22 @@
         public bool DrinkPotion()
         {
             if (PotionCount <= 0) { return false; }
-            if (CurrentHp + 20 > MaxHp) { CurrentHp = MaxHp; PotionCount -= 1; return false; }
+            if (CurrentHp == MaxHp) { return false; }
+            else if (CurrentHp + 20 > MaxHp) { CurrentHp = MaxHp; PotionCount -= 1; return true; }
             else { CurrentHp += 20; PotionCount -= 1; return true; }
         }
+        public virtual bool basic(Enemy enemy)
+        {
+            return false;
+        }
+        public virtual bool spender(Enemy enemy)
+        {
+            return false;
+        }
+        public virtual bool ultimate(Enemy enemy)
+        {
+            return false;
+        }
+
     }
 }
